@@ -11,7 +11,7 @@ Transaction* createNode(int cod, int s){
 };
 
 //Recebe uma transação e insere no final da lista
-void add(Transaction **tr, Transaction *queue);
+void add(Transaction newTransaction, Transaction *queue);
 
 //Apaga a primeira transação da lista
 void pop(Transaction **queue);
