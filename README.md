@@ -53,3 +53,14 @@ _Para avaliação da atividade, será observado:_
   </tr>
 </table>
 
+#### Estrutura de Diretórios do Projeto
+
+.
+├── main.c
+└── struct
+    ├── client
+    │   ├── client.c
+    │   └── client.h
+    └── transaction
+        ├── transaction.c
+        └── transaction.h
