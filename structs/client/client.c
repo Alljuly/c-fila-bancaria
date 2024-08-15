@@ -1,11 +1,12 @@
 #include "client.h"
 
-Client* create(int cod);
+Client *createClient(int cod);
 
-void add(Client cli, Client *list);
+void enqueueClient(Client **queue, Client *newClient);
 
-void getAdd(Client cli, Client pr, Client *list);
+Client *dequeueClient(Client **queue);
 
-void pop(Client *list);
+void addTransaction(Client *client, Transaction t);
 
-void getAll(Client *list);
+void printTransaction(Client *client);
+

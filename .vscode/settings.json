@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.py": "python",
+        "stdio.h": "c",
+        "clientqueue.h": "c",
+        "transaction.h": "c"
+    }
+}

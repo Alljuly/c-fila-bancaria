@@ -11,8 +11,7 @@ struct transaction {
 
 typedef struct transaction Transaction;
 
-
-Transaction* createTr(int cod, int seconds);
+Transaction* createTransaction(int cod, int seconds);
 
 void add(Transaction **newTransaction, Transaction *queue);
 
