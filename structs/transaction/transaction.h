@@ -3,13 +3,11 @@
 
 //Lista encadeada
 
-struct transaction {
+typedef struct transaction {
     int cod;
     int s;
-    Transaction *prox;
-};
-
-typedef struct transaction Transaction;
+    struct transaction *prox;
+} Transaction;
 
 
 Transaction* createTr(int cod, int s);
