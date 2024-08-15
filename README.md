@@ -56,9 +56,9 @@ _Além de fazer o gerenciamento da fila, o sistema deve:_
   </tr>
   </table>
 
-### Processo para elaboração do projeto
+## Processo para elaboração do projeto
 
-#### Estrutura de Diretórios do Projeto
+### Estrutura de Diretórios do Projeto
 
 ```shell
 .
@@ -74,7 +74,7 @@ _Além de fazer o gerenciamento da fila, o sistema deve:_
 
 ```
 
-#### Definindo as Structs
+### Definindo as Structs
 - Para Cliente:
   - Lista encadeada ou fila (definir ainda);
   - sei la
