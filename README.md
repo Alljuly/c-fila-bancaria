@@ -62,16 +62,17 @@ _Além de fazer o gerenciamento da fila, o sistema deve:_
 
 ```shell
 .
-├── README.md
 ├── main.c
 └── structs
     ├── client
     │   ├── client.c
     │   └── client.h
+    ├── clienteQueue
+    │   └── clientQueue.c
+    │   └── clientQueue.h
     └── transaction
         ├── transaction.c
         └── transaction.h
-
 ```
 
 ### Definindo as Structs
@@ -80,8 +81,25 @@ _Além de fazer o gerenciamento da fila, o sistema deve:_
   - sei la
   - bla bla
   - bla bla
+```C
+typedef struct client {
+    int info;
+    //adicionar variavel que guarde o instante que o cliente chegou
+    Transaction *transactionList; // Cabeça da lista encadeada de transações do cliente
+    struct client *next;          // Ponteiro para o próximo cliente na fila
+} Client;
+```   
 - Para Transações:
   - Lista encadeada ou fila (definir ainda);
   - sei la
   - bla bla
   - bla bla
+```C
+struct transaction {
+    int cod;
+    int s;
+    Transaction *prox;
+};
+typedef struct transaction Transaction;
+```  
+ 
