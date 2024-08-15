@@ -5,16 +5,16 @@
 
 struct transaction {
     int cod;
-    int s;
+    int seconds;
     Transaction *prox;
 };
 
 typedef struct transaction Transaction;
 
 
-Transaction* createTr(int cod, int s);
+Transaction* createTr(int cod, int seconds);
 
-void add(Transaction **newTr, Transaction *queue);
+void add(Transaction **newTransaction, Transaction *queue);
 
 void pop(Transaction **queue);
 
