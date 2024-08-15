@@ -62,16 +62,17 @@ _Além de fazer o gerenciamento da fila, o sistema deve:_
 
 ```shell
 .
-├── README.md
 ├── main.c
 └── structs
     ├── client
     │   ├── client.c
     │   └── client.h
+    ├── clienteQueue
+    │   └── clientQueue.c
+    │   └── clientQueue.h
     └── transaction
         ├── transaction.c
         └── transaction.h
-
 ```
 
 ### Definindo as Structs
