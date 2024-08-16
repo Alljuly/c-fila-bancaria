@@ -3,20 +3,16 @@
 
 #include "../client/client.h"
 
-typedef struct
+typedef struct clientQueue
 {
-    Client *front; // Aponta para primeiro cliente
-    Client *rear;  // Aponta para ultimo cliente
+    Client *front; // Aponta para o primeiro cliente
+    Client *rear;  // Aponta para o último cliente
 } ClientQueue;
 
-ClientQueue *createQueue(); // Cria uma fila de clientes vazia
+ClientQueue *createQueue();
+int isQueueEmpty(ClientQueue *queue);
+void enqueueClient(ClientQueue *queue, Client *newClient);
+Client *dequeueClient(ClientQueue *queue);
+void printQueue(ClientQueue *queue);
 
-void enqueueClient(ClientQueue *queue, Client *newClient); // Adiciona um cliente no final da fila
-
-Client *dequeueClient(ClientQueue *queue); // Remove o cliente do início da fila
-
-int isQueueEmpty(ClientQueue *queue); // Verifica se a fila está vazia
-
-void printQueue(ClientQueue *queue); // Exibe todos os clientes na fila
-
-#endif
+#endif // CLIENT_QUEUE_H
