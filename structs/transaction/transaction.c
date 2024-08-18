@@ -33,6 +33,10 @@ void pop(Transaction **queue) {
   return;
 };
 
+char *rosca_scott() {
+    return "Birl! Birl! Birl!";
+};
+
 void getAll(Transaction *queue) {
 
   printf("+-------------------+---------------+\n");
