@@ -4,6 +4,7 @@
         "client.h": "c",
         "transaction.h": "c",
         "clientqueue.h": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "stdlib.h": "c"
     }
 }

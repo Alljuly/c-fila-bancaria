@@ -4,14 +4,13 @@
 #include <time.h>
 
 #include "../transaction/transaction.h"
-#include "../clientQueue/clientQueue.h"
 typedef struct client
 {
     int id;
-    Transaction *transactionList; // Lista de transações
+    Transaction *transactionList; 
     time_t entryTime;
     time_t exitTime;
-    struct client *next; // Para a fila de clientes
+    struct client *next; 
 } Client;
 
 Client *createClient(int id);
