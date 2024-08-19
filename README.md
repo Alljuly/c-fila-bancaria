@@ -80,31 +80,56 @@ _Além de fazer o gerenciamento da fila, o sistema deve:_
         └── transaction.h
 ```
 
-### Definindo as Structs
-- Para Cliente:
-  - Lista encadeada ou fila (definir ainda);
-  - sei la
-  - bla bla
-  - bla bla
-```C
-typedef struct client {
-    int info;
-    //adicionar variavel que guarde o instante que o cliente chegou
-    Transaction *transactionList; // Cabeça da lista encadeada de transações do cliente
-    struct client *next;          // Ponteiro para o próximo cliente na fila
-} Client;
-```   
-- Para Transações:
-  - Lista encadeada ou fila (definir ainda);
-  - sei la
-  - bla bla
-  - bla bla
-```C
-struct transaction {
+### Definições das Structs
+
+- Para Transações (Transaction):
+  - Para a fila de transações foi implementada uma lista encadeada, permitindo um gerenciamento dinâmico.
+    ```C
+    struct transaction {
     int cod;
     int s;
     Transaction *prox;
-};
-typedef struct transaction Transaction;
-```  
- 
+    };
+    typedef struct transaction Transaction;
+    ```
+  - Metódos:
+    - Transaction *createTransaction(int cod, int seconds);
+    - void add(Transaction **queue, Transaction *newTransaction);
+    - void pop(Transaction **queue);
+    - void getAll(Transaction *queue);
+- Para Cliente (Client):
+  - Foi definido que a estrutura de cliente seria utilizado uma fila, dessa forma "Client".
+    ```C
+    typedef struct client
+    {
+    int id; // Identificação do cliente
+    Transaction *transactionList; // Lista de transações que o cliente irá realizar
+    time_t entryTime;  // Momento que o cliente foi alocado na fila
+    time_t exitTime;   // Momento que o cliente teve seu atendimento finalizado
+    struct client *next; // Aponta para o proximo cliente na fila 
+    } Client;
+    ```
+  - Seguindo a lógica de uma fila real de um banco, o conceito de uma estrutura FIFO se encaixaria bem.
+  - Metódos:
+    - Client *createClient(int id);
+    - void addTransactionToClient(Client *client, Transaction *transaction);
+    - void printClientTransactions(Client *client);
+  - Por se Tratar de uma fila, a clientQueue foi definida para genrencia-la.
+- Para a Fila de clientes (ClientQueue):
+  - Responsável por gerenciar os clientes, sua estrutura consiste em:
+    ```C
+    typedef struct clientQueue
+    {
+    Client *front; // Aponta para o primeiro cliente da fila
+    Client  *rear;  // Aponta para o último cliente da fila
+    } ClientQueue;
+     ```
+  - Metódos:
+    - ClientQueue *createQueue();
+    - int isQueueEmpty(ClientQueue *queue);
+    - void enqueueClient(ClientQueue *queue, Client *newClient);
+    - Client *dequeueClient(ClientQueue *queue);
+    - void printQueue(ClientQueue *queue);
+    
+   
+
