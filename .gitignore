@@ -1,1 +1,9 @@
 ./main
+./main.exe
+./transactions
+./transactions.exe
+./client
+./client.exe
+./clientQueue
+./clientQueue.exe
+.vscode

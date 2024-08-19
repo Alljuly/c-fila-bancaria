@@ -1,22 +1,19 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
-//Lista encadeada
-
-typedef struct transaction {
+typedef struct transaction
+{
     int cod;
     int seconds;
     struct transaction *prox;
 } Transaction;
 
+Transaction *createTransaction(int cod, int seconds);
 
-Transaction* createTr(int cod, int seconds);
-
-void add(Transaction **newTransaction, Transaction *queue);
+void add(Transaction **queue, Transaction *newTransaction);
 
 void pop(Transaction **queue);
 
 void getAll(Transaction *queue);
 
-#endif
-
+#endif // TRANSACTION_H
