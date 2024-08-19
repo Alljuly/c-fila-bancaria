@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "clientQueue.h"
+#include "../client/client.h"
 
 // Criação de uma nova fila de clientes
 ClientQueue *createQueue()
@@ -33,41 +34,49 @@ void enqueueClient(ClientQueue *queue, Client *newClient)
 // Remover cliente da fila
 Client *dequeueClient(ClientQueue *queue)
 {
-    if (isQueueEmpty(queue))
-    {
-        return NULL;
+    int aux = isQueueEmpty(queue);
+
+    if(aux == 0){
+
+        Client *clientToDequeue = queue->front;
+        queue->front = queue->front->next;
+
+        if (queue->front == NULL)
+        {
+            queue->rear = NULL;
+        }
+
+        return clientToDequeue;
     }
-
-    Client *clientToDequeue = queue->front;
-    queue->front = queue->front->next;
-
-    if (queue->front == NULL)
-    {
-        queue->rear = NULL;
-    }
-
-    return clientToDequeue;
+    
 }
 
 // Verificar se a fila está vazia
 int isQueueEmpty(ClientQueue *queue)
 {
-    return queue->front == NULL;
+    if (queue->front == NULL)
+    {
+        printf("+-------------------+---------------+\n");
+        printf("|          A fila está vazia        |\n");
+        printf("+-------------------+---------------+\n");
+        return 1;
+    } 
+    return 0;
 }
 
 // Imprimir todos os clientes na fila
 void printQueue(ClientQueue *queue)
 {
-    if (queue == NULL || isQueueEmpty(queue))
-    {
-        printf("A fila está vazia.\n");
-        return;
-    }
 
-    Client *current = queue->front;
-    while (current != NULL)
-    {
-        printf("Cliente ID: %d\n", current->id);
-        current = current->next;
+    int aux = isQueueEmpty(queue);
+    if(aux == 0){
+        Client *current = queue->front;
+        while (current != NULL)
+        {   
+            printf("+-------------------+---------------+\n");
+            printf("|            Cliente ID: %d          |\n", current->id);
+            printf("+-------------------+---------------+\n");
+            current = current->next;
+        }
     }
 }
