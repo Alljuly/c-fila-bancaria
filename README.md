@@ -62,13 +62,18 @@ _Além de fazer o gerenciamento da fila, o sistema deve:_
 
 ```shell
 .
+├── LICENSE
+├── README.md
 ├── main.c
+├── menu
+│   └── menu.c
+├── readme.txt
 └── structs
     ├── client
     │   ├── client.c
     │   └── client.h
-    ├── clienteQueue
-    │   └── clientQueue.c
+    ├── clientQueue
+    │   ├── clientQueue.c
     │   └── clientQueue.h
     └── transaction
         ├── transaction.c
