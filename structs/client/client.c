@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "client.h"
-
 #include "../transaction/transaction.h"
 
 Client *createClient(int id)
