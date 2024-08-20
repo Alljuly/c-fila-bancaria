@@ -1,9 +1,12 @@
+#include "transaction.h"
+#include "../../utils/colors.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "transaction.h"
 
-Transaction *createTransaction(int cod, int seconds)
-{
+extern const char *colors[];
+extern int numColors;
+extern int colorIndex;
+Transaction *createTransaction(int cod, int seconds) {
   Transaction *newTransaction = (Transaction *)malloc(sizeof(Transaction));
   newTransaction->cod = cod;
   newTransaction->seconds = seconds;
@@ -12,17 +15,12 @@ Transaction *createTransaction(int cod, int seconds)
 }
 
 // adiciona uma transação no final da lista
-void add(Transaction **queue, Transaction *newTransaction)
-{
-  if (*queue == NULL)
-  {
+void add(Transaction **queue, Transaction *newTransaction) {
+  if (*queue == NULL) {
     *queue = newTransaction;
-  }
-  else
-  {
+  } else {
     Transaction *aux = *queue;
-    while (aux->prox != NULL)
-    {
+    while (aux->prox != NULL) {
       aux = aux->prox;
     }
     aux->prox = newTransaction;
@@ -30,10 +28,8 @@ void add(Transaction **queue, Transaction *newTransaction)
 }
 
 // remove a primeira transação
-void pop(Transaction **queue)
-{
-  if (*queue == NULL)
-  {
+void pop(Transaction **queue) {
+  if (*queue == NULL) {
     printf("Nenhuma transação encontrada.\n");
     return;
   }
@@ -43,33 +39,26 @@ void pop(Transaction **queue)
   return;
 };
 
-char *rosca_scott() {
-    return "Birl! Birl! Birl!";
-};
-
-char *rosca_scott() {
-    return "Birl! Birl! Birl!";
-};
-
-
 // imprime todas as transações caso tenha, se não informa que a lista está vazia
-void getAll(Transaction *queue)
-{
-   const char *colors[] = {
-        "\033[1;31m", // Vermelho
-        "\033[1;34m", // Azul
-        "\033[1;35m", // Magenta
-        "\033[1;36m", // Ciano
-    };
-    int numColors = sizeof(colors) / sizeof(colors[0]);
-    int colorIndex = 0;
-  printf("%s+-------------------+---------------+\n",  colors[colorIndex++ % numColors]);
-  printf("%s| Tipo de Transação |    Duração    |\n",  colors[colorIndex++ % numColors]);
-  printf("%s+-------------------+---------------+\n",  colors[colorIndex++ % numColors]);
-  while (queue != NULL)
-  {
+void getAll(Transaction *queue) {
+
+  printf("%s+-------------------+---------------+\n",
+         colors[colorIndex++ % numColors]);
+  printf("%s| Tipo de Transacao |    Duracao    |\n",
+         colors[colorIndex++ % numColors]);
+  printf("%s+-------------------+---------------+\n",
+         colors[colorIndex++ % numColors]);
+  while (queue != NULL) {
     printf("| %-17d | %-13d |\n", queue->cod, queue->seconds);
-    printf("%s+-------------------+---------------+\n", colors[colorIndex++ % numColors]);
+    printf("%s+-------------------+---------------+\n",
+           colors[colorIndex++ % numColors]);
     queue = queue->prox;
   }
 };
+
+int main() {
+  Transaction *c = createTransaction(1, 250);
+
+  getAll(c);
+  return 0;
+}

@@ -27,3 +27,10 @@ Isso pode ficar mais complicado de implementar.
 5 -  Função atender:
   - Precisa verificar se a lista está vazia, se n tiver atende.
   - Talvez uma var "ocupado" tipo booleana;
+
+
+6 - Como funciona
+  O menu principal é chamado, dando as opções ao atendente de abrir a fila, começar a atender, ou encerrar a fila e mostrar o relatório.
+  
+  temos 2 filas onde a primeira recebera os clientes inicialmente, ao serem atendidos irão para a segunda fila que irá ser chamada no relatório final.
+  

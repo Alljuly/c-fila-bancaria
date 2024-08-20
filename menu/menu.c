@@ -1,95 +1,124 @@
-void printMenu()
-{
-    printf("\nMenu:\n");
-    printf("1. Adicionar cliente à fila\n");
-    printf("2. Ver clientes na fila existente\n");
-    printf("3. Remover cliente da fila\n");
-    printf("4. Ver transações por cliente\n");
-    printf("5. Atender cliente\n");
-    printf("6. Sair\n");
+#include "menu.h"
+
+#include "../structs/client/client.h"
+#include "../structs/clientQueue/clientQueue.h"
+#include "../utils/colors.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+void printMenu() {
+  printf("%s+-------------------------------+\n",
+         colors[colorIndex++ % numColors]);
+  printf("%s|            Menu               |\n",
+         colors[colorIndex++ % numColors]);
+  printf("%s+-------------------------------+\n",
+         colors[colorIndex++ % numColors]);
+  printf("%s| 1. Adicionar cliente           |\n",
+         colors[colorIndex++ % numColors]);
+  printf("%s| 2. Atender Cliente             |\n",
+         colors[colorIndex++ % numColors]);
+  printf("%s| 3. Exibir relatorio atual      |\n",
+         colors[colorIndex++ % numColors]);
+  printf("%s+-------------------------------+\n",
+         colors[colorIndex++ % numColors]);
 }
 
+void addClientToQueue(ClientQueue *queue) {
+  int id;
+  printf("%s| Digite o ID do cliente:      |\n",
+         colors[colorIndex++ % numColors]);
+  scanf("%d", &id);
 
-void addClientToQueue(ClientQueue *queue)
-{
-    int id;
-    printf("Digite o ID do cliente: ");
-    scanf("%d", &id);
+  Client *newClient = createClient(id);
+  if (newClient == NULL) {
+    printf("%s| Erro ao criar o cliente. |\n",
+           colors[colorIndex++ % numColors]);
+    return;
+  }
 
-    Client *newClient = createClient(id);
-    if (newClient == NULL)
-    {
-        printf("Erro ao criar o cliente.\n");
-        return;
-    }
-
-    enqueueClient(queue, newClient);
-    printf("Cliente adicionado à fila com sucesso.\n");
+  enqueueClient(queue, newClient);
+  printf("%s| Cliente adicionado à fila com sucesso. |\n",
+         colors[colorIndex++ % numColors]);
 }
 
-void viewClientsInQueue(ClientQueue *queue)
-{
-    printQueue(queue);
+void viewClientInQueue(Client *current) {
+
+  if (current != NULL) {
+
+    char entryTimeStr[26];
+    char exitTimeStr[26];
+    strftime(entryTimeStr, sizeof(entryTimeStr), "%Y-%m-%d %H:%M:%S",
+             localtime(&current->entryTime));
+    strftime(exitTimeStr, sizeof(exitTimeStr), "%Y-%m-%d %H:%M:%S",
+             localtime(&current->exitTime));
+
+    double diff = difftime(current->exitTime, current->exitTime);
+
+    printf("%s+--------------------------------------+\n",
+           colors[colorIndex++ % numColors]);
+    printf("%s| Cliente ID: %d                       |\n",
+           colors[colorIndex++ % numColors], current->id);
+    printf("%s| Entrada: %s                          |\n",
+           colors[colorIndex++ % numColors], entryTimeStr);
+    printf("%s| Tempo na Fila: %.2f s                |\n",
+           colors[colorIndex++ % numColors], diff);
+    printf("%s+--------------------------------------+\n",
+           colors[colorIndex++ % numColors]);
+  }
+}
+void removeClientFromQueue(ClientQueue *queue) {
+  Client *removedClient = dequeueClient(queue);
+  if (removedClient != NULL) {
+    free(removedClient); // Libere a memória do cliente removido
+  }
 }
 
-void removeClientFromQueue(ClientQueue *queue)
-{
-    Client *removedClient = dequeueClient(queue);
-    if (removedClient == NULL)
-    {
-        printf("Fila vazia. Nenhum cliente para remover.\n");
+void viewClientTransactions(Client *queue) {}
+
+void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients) {
+  if (isQueueEmpty(queueClients)) {
+    printf("Nenhum cliente para atender.\n");
+    return;
+  }
+
+  Client *clientToAttend = dequeueClient(queueClients);
+
+  if (clientToAttend != NULL) {
+    printf("Atendendo cliente %d...\n", clientToAttend->id);
+
+    Transaction *currentTransaction = clientToAttend->transactionList;
+    int totalProcessingTime = 0;
+
+//não entendi
+    while (currentTransaction != NULL) {
+      totalProcessingTime += currentTransaction->seconds;
+      currentTransaction = currentTransaction->prox;
     }
-    else
-    {
-        printf("Cliente com ID %d removido da fila.\n", removedClient->id);
-        free(removedClient); // Libere a memória do cliente removido
-    }
+
+    clientToAttend->exitTime = time(NULL);
+    enqueueClient(attemptedClients, clientToAttend);
+    printf("Cliente %d atendido.\n", clientToAttend->id);
+
+    free(clientToAttend);
+  }
 }
 
-void viewClientTransactions(ClientQueue *queue)
-{
-    if (queue->front != NULL)
-    {
-        Client *currentClient = queue->front;
-        printClientTransactions(currentClient);
-    }
-    else
-    {
-        printf("Nenhum cliente na fila para visualizar transações.\n");
-    }
-}
+void printRelatory(ClientQueue *queue) {
+  while (queue->front != NULL) {
+    Client *current = queue->front;
+    viewClientInQueue(current);
+    viewClientTransactions(current);
 
-void attendClient(ClientQueue *queue)
-{
-    if (isQueueEmpty(queue))
-    {
-        printf("Nenhum cliente para atender.\n");
-        return;
-    }
+    queue->front = current->next;
+  }
 
-    int currentTime = time(NULL); // Tempo atual
-    Client *clientToAttend = dequeueClient(queue);
-
-    if (clientToAttend != NULL)
-    {
-        clientToAttend->entryTime = currentTime;
-        printf("Atendendo cliente %d...\n", clientToAttend->id);
-
-        Transaction *currentTransaction = clientToAttend->transactionList;
-        int totalProcessingTime = 0;
-
-        while (currentTransaction != NULL)
-        {
-            totalProcessingTime += currentTransaction->seconds;
-            currentTransaction = currentTransaction->prox;
-        }
-
-        // Espera simulada do atendimento
-        sleep(totalProcessingTime);
-
-        clientToAttend->exitTime = time(NULL);
-        printf("Cliente %d atendido.\n", clientToAttend->id);
-
-        free(clientToAttend);
-    }
+  if (queue == NULL) {
+    printf("%s+--------------------------------------+\n",
+           colors[colorIndex++ % numColors]);
+    printf("%s|              FIM DA FILA             |\n",
+           colors[colorIndex++ % numColors]);
+    printf("%s+--------------------------------------+\n",
+           colors[colorIndex++ % numColors]);
+    return;
+  }
 }
