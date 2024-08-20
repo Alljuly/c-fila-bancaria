@@ -6,8 +6,23 @@ _Contribuições_
 [Alice Julia Silva Costa](https://github.com/Alljuly)
 
 [Emanuel Vilela de Souza](https://github.com/emanuelvsz)
-<div style="display: flex; justify-content: space-between;">
-<div style="width: 48%; box-sizing: border-box;">
+<div style="display: flex; flex-direction:row;">
+    <div style="box-sizing: border-box;">
+    <h2>Descrição geral da atividade</h2>
+    <i>Simulação de atendimento bancário, com uma fila de clientes, que podem realizar 1 ou mais transações.</i>
+    <br>
+    <br>
+    <i>Para avaliação da atividade, será observado:</i>
+    <ul>
+      <li>Todo o projeto em C.</li>
+      <li>Uso de listas encadeadas e filas.</li>
+      <li>Modularidade do código.</li>
+      <li>Documentação interna.</li>
+      <li>Outros assuntos abordados na matéria.</li>
+      <li>Justificativa das estruturas de dados utilizadas.</li>
+    </ul>
+  </div>
+    <div style=" box-sizing: border-box;">
     <h2>Requisitos</h2>
     <i>Além de fazer o gerenciamento da fila, o sistema deve:</i>
     <ul>
@@ -55,21 +70,7 @@ _Contribuições_
   </tr>
 </table>
   </div>
-  <div style="width: 48%; box-sizing: border-box;">
-    <h2>Descrição geral da atividade</h2>
-    <i>Simulação de atendimento bancário, com uma fila de clientes, que podem realizar 1 ou mais transações.</i>
-    <br>
-    <br>
-    <i>Para avaliação da atividade, será observado:</i>
-    <ul>
-      <li>Todo o projeto em C.</li>
-      <li>Uso de listas encadeadas e filas.</li>
-      <li>Modularidade do código.</li>
-      <li>Documentação interna.</li>
-      <li>Outros assuntos abordados na matéria.</li>
-      <li>Justificativa das estruturas de dados utilizadas.</li>
-    </ul>
-  </div>
+  
 
 </div>
 
