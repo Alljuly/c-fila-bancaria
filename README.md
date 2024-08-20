@@ -1,60 +1,80 @@
 # 🫰 Conheça o _Nosso Banco_
 Projeto construído para a matéria de Estrutura de Dados para implementação de um fila de banco.
 
-## O que foi pedido
-_Simulação de atendimento bancário, com uma fila de clientes, que podem realizar 1 ou mais transações._
+_Contribuições_ 
 
-_Para avaliação da atividade, será observado:_
-- Todo o projeto em C.
-- Uso de listas encadeadas e filas.
-- Modularidade do código.
-- Documentação interna.
-- Outros assunstos abordados na matéria.
-- Justificativa das estruturas de dados utilizadas.
+[Alice Julia Silva Costa](https://github.com/Alljuly)
 
-### Requisitos
-_Além de fazer o gerenciamento da fila, o sistema deve:_
+[Emanuel Vilela de Souza](https://github.com/emanuelvsz)
+<div style="display: flex; justify-content: space-between;">
+<div style="width: 48%; box-sizing: border-box;">
+    <h2>Requisitos</h2>
+    <i>Além de fazer o gerenciamento da fila, o sistema deve:</i>
+    <ul>
+      <li>Exibir o tempo que o cliente permaneceu na fila.</li>
+      <li>Quando o cliente entra na fila o tempo é registrado para ser adicionado no tempo final que ele ficou.</li>
+      <li>O cliente pode fazer uma ou várias das transações.</li>
+      <li>No final do expediente, relatório que a gerência analisa sobre o atendimento.</li>
+    </ul>
+    <h4>Relatório sobre o atendimento</h4>
+    <ul>
+      <li>Quantidade de clientes.</li>
+      <li>Tempo total.</li>
+      <li>Tempo de cada cliente.</li>
+      <li>Atendimento por prioridade.</li>
+    </ul>
+    <h4>Transações</h4>
+    <table>
+      <tr>
+      <th>Código</th>
+      <th>Transação</th> 
+      <th>Duração</th> 
+      </tr>
+      <tr>
+      <th>1</th>
+      <th>Saque</th> 
+      <th>50s</th> 
+      </tr>
+      <tr>
+      <th>2</th>
+      <th>Depósito</th> 
+      <th>70s</th> 
+      </tr>
+      <tr>
+      <th>3</th>
+      <th>Pagamento</th> 
+      <th>100s</th> 
+      </tr>
+      <tr>
+      <th>4</th>
+      <th>Transferência</th> 
+      <th>60s</th> 
+      </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+  </div>
+  <div style="width: 48%; box-sizing: border-box;">
+    <h2>Descrição geral da atividade</h2>
+    <i>Simulação de atendimento bancário, com uma fila de clientes, que podem realizar 1 ou mais transações.</i>
+    <br>
+    <br>
+    <i>Para avaliação da atividade, será observado:</i>
+    <ul>
+      <li>Todo o projeto em C.</li>
+      <li>Uso de listas encadeadas e filas.</li>
+      <li>Modularidade do código.</li>
+      <li>Documentação interna.</li>
+      <li>Outros assuntos abordados na matéria.</li>
+      <li>Justificativa das estruturas de dados utilizadas.</li>
+    </ul>
+  </div>
 
-- Exibir o tempo que o cliente permaneceu na fila.
-- Quando o cliente entra na fila o tempo é registrado para ser adicionado no tempo final que ele ficou.
-- O cliente pode fazer uma ou várias das transações.
-- No final do expediente, relatório que a gerência analisa sobre o atendimento.
-  
-  #### Relário sobre o atendimento
-    - Quantidade de clientes.
-    - Tempo total.
-    - Tempo de cada cliente.
-    - Atendimento por prioridade.
+</div>
 
-  #### Transações
 
-  <table>
-  <tr>
-  <th>Código</th>
-  <th>Transação</th> 
-  <th>Duração</th> 
-  </tr>
-  <tr>
-  <th>1</th>
-  <th>Saque</th> 
-  <th>50s</th> 
-  </tr>
-  <tr>
-  <th>2</th>
-  <th>Depósito</th> 
-  <th>70s</th> 
-  </tr>
-  <tr>
-  <th>3</th>
-  <th>Pagamento</th> 
-  <th>100s</th> 
-  </tr>
-  <tr>
-  <th>4</th>
-  <th>Transferência</th> 
-  <th>60s</th> 
-  </tr>
-  </table>
+
 
 ## Processo para elaboração do projeto
 
@@ -151,6 +171,5 @@ gcc-9 ./menu.c ./handles/handleTransaction.c ../structs/client/client.c ../struc
 ./main
 ```
 - Main
-- Menu
-- Handles
+
 
