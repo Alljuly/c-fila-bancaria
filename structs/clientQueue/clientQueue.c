@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "../../utils/colors.h"
 #include "../client/client.h"
 #include "clientQueue.h"
 
@@ -39,8 +37,8 @@ Client *dequeueClient(ClientQueue *queue) {
   if (queue->front == NULL) {
     queue->rear = NULL;
   }
-
-  return clientToDequeue;
+  return clientToDequeue; 
+  
 }
 
 // Verificar se a fila está vazia
@@ -58,22 +56,57 @@ int isQueueEmpty(ClientQueue *queue) {
 void printQueue(ClientQueue *queue) {
 
   if (isQueueEmpty(queue)) {
-    Client *current = queue->front;
+    return;
+  }
+
+   Client *current = queue->front;
+    printf("+-----------------------------------+\n");
     while (current != NULL) {
-      printf("%s+-------------------+---------------+\n",
-             colors[colorIndex++ % numColors]);
-      printf("%s|            Cliente ID: %d          |\n",
-             colors[colorIndex++ % numColors], current->id);
-      printf("%s+-------------------+---------------+\n",
-             colors[colorIndex++ % numColors]);
+     
+      printf("|            Cliente ID: %d          |\n", current->id);
+      printf("+-----------------------------------+\n");
+      
       current = current->next;
     }
-  }
+
 }
 
-int main() {
+/*Teste das funções 
+Remova os comentarios e execute
+gcc-9 ./client.c ../transaction/transaction.c -o ./main
+./main
+int main(){
+  Transaction *t = createTransaction(1,50);
+  Transaction *t1 = createTransaction(2,100);
+
   Client *c = createClient(1);
+  Client *c1 = createClient(3);
+  
+  ClientQueue *queue = createQueue();
+  printQueue(queue);
+
+  enqueueClient(queue, c);
+
+  printQueue(queue);
+
+  enqueueClient(queue, c1);
+
+  printQueue(queue);
+
+  dequeueClient(queue);
+
+  printQueue(queue);
+
+
+  addTransactionToClient(c, t);
 
   printClientTransactions(c);
+
+  printClientTransactions(c1);
+
+
+
   return 0;
+
 }
+*/
