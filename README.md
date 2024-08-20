@@ -66,7 +66,12 @@ _Além de fazer o gerenciamento da fila, o sistema deve:_
 ├── README.md
 ├── main.c
 ├── menu
-│   └── menu.c
+│   ├── handles
+│   │   ├── handleTransaction.c
+│   │   └── handleTransaction.h
+│   ├── main
+│   ├── menu.c
+│   └── menu.h
 ├── readme.txt
 └── structs
     ├── client
@@ -78,6 +83,7 @@ _Além de fazer o gerenciamento da fila, o sistema deve:_
     └── transaction
         ├── transaction.c
         └── transaction.h
+
 ```
 
 ### Definições das Structs
@@ -131,5 +137,20 @@ _Além de fazer o gerenciamento da fila, o sistema deve:_
     - Client *dequeueClient(ClientQueue *queue);
     - void printQueue(ClientQueue *queue);
     
-   
+### Definindo Menu
+
+
+### Definindo Handle
+
+
+### Como Utilizar
+- Execute
+```shell
+gcc-9 ./menu.c ./handles/handleTransaction.c ../structs/client/client.c ../structs/transaction transaction.c ../structs/clientQueue/clientQueue.c -o ./main
+
+./main
+```
+- Main
+- Menu
+- Handles
 
