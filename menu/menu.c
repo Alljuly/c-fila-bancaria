@@ -1,9 +1,9 @@
 #include "menu.h"
 
-#include "./handles/handleTransaction.h"
 #include "../structs/client/client.h"
-#include "../structs/transaction/transaction.h"
 #include "../structs/clientQueue/clientQueue.h"
+#include "../structs/transaction/transaction.h"
+#include "./handles/handleTransaction.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,23 +33,23 @@ void addClientToQueue(ClientQueue *queue) {
   newClient->transactionList = addTransactionsToClient();
 
   enqueueClient(queue, newClient);
-  printf("... Cliente adicionado à fila com sucesso. \n");
+  printf("... Cliente adicionado a fila com sucesso. \n");
 }
 
-Transaction* addTransactionsToClient(){
-    int aux = 1;
-    Transaction *t = NULL;
-    while(aux){
-      printf("..........\n Adicionar transacao?\n1 - SIM 0 - NAO\n");
-      scanf("%d", &aux);
-      if(aux){
-        int choice = 0;
-          menuTransaction();
-          scanf("%d",&choice);
-          addTransactionHandle(choice, &t);
-      }
+Transaction *addTransactionsToClient() {
+  int aux = 1;
+  Transaction *t = NULL;
+  while (aux) {
+    printf("..........\n Adicionar transacao?\n1 - SIM 0 - NAO\n");
+    scanf("%d", &aux);
+    if (aux) {
+      int choice = 0;
+      menuTransaction();
+      scanf("%d", &choice);
+      addTransactionHandle(choice, &t);
     }
-    return t;
+  }
+  return t;
 }
 
 void viewClientInQueue(Client *current) {
@@ -61,24 +61,22 @@ void viewClientInQueue(Client *current) {
     strftime(entryTimeStr, sizeof(entryTimeStr), "%Y-%m-%d %H:%M:%S",
              localtime(&current->entryTime));
 
-    if(current->exitTime) {
-    strftime(exitTimeStr, sizeof(exitTimeStr), "%Y-%m-%d %H:%M:%S",
-    localtime(&current->exitTime));
-    double diff = difftime(current->exitTime, current->entryTime);
-     }  else {
+    if (current->exitTime) {
+      strftime(exitTimeStr, sizeof(exitTimeStr), "%Y-%m-%d %H:%M:%S",
+               localtime(&current->exitTime));
+      double diff = difftime(current->exitTime, current->entryTime);
+    } else {
       current->exitTime = time(NULL);
       strftime(exitTimeStr, sizeof(exitTimeStr), "%Y-%m-%d %H:%M:%S",
-             localtime(&current->exitTime));
+               localtime(&current->exitTime));
+    }
+    double diff = difftime(current->exitTime, current->entryTime);
 
-       
-     }
-      double diff = difftime(current->exitTime, current->entryTime);
-
-      printf("+--------------------------------------+\n");
-      printf("| Cliente ID: %d                       |\n", current->id);
-      printf("| Entrada: %s       |\n", entryTimeStr);
-      printf("| Tempo na Fila: %.lfs                 |\n", diff);
-      printf("+--------------------------------------+\n");
+    printf("+--------------------------------------+\n");
+    printf("| Cliente ID: %d                       |\n", current->id);
+    printf("| Entrada: %s       |\n", entryTimeStr);
+    printf("| Tempo na Fila: %.lfs                 |\n", diff);
+    printf("+--------------------------------------+\n");
   }
 }
 
@@ -90,17 +88,17 @@ void removeClientFromQueue(ClientQueue *queue) {
 }
 
 void viewClientTransactions(Client *current) {
-       Transaction *currentTransactions = current->transactionList;
-       
-       if(currentTransactions != NULL){
-              getAll(currentTransactions);
-       }
+  Transaction *currentTransactions = current->transactionList;
+
+  if (currentTransactions != NULL) {
+    getAll(currentTransactions);
+  }
 }
 
 void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients) {
 
   Client *clientToAttend = dequeueClient(queueClients);
-  
+
   if (clientToAttend->id) {
     printf("Atendendo cliente %d ...\n", clientToAttend->id);
 
@@ -109,60 +107,61 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients) {
 
     while (currentTransactions) {
       totalProcessingTime += currentTransactions->seconds;
-      //adicionar sleep para os s do atendimento
+      // adicionar sleep para os s do atendimento
       printf("..... Em atendimento a %ds......\n", totalProcessingTime);
       currentTransactions = currentTransactions->prox;
     }
 
     clientToAttend->exitTime = time(NULL);
- 
 
     enqueueClient(attemptedClients, clientToAttend);
     printf("Cliente %d atendido.\n", clientToAttend->id);
   }
-
 }
 
-//CORRIGIR: ao receber lista vazia ocorre Segmentation fault (core dumped)
-//imprime o relátorio de uma fila de clientes
+// CORRIGIR: ao receber lista vazia ocorre Segmentation fault (core dumped)
+// imprime o relátorio de uma fila de clientes
 void printRelatory(ClientQueue *queue) {
 
+  if (!isQueueEmpty(queue)) {
+    
+  
   int count = 0;
-  while (queue->front != NULL) {
+
+  while (queue->front) {
     Client *current = queue->front;
     viewClientInQueue(current);
     viewClientTransactions(current);
-    count ++;
+    count++;
     queue->front = current->next;
   }
-    printf("+--------------------------------------+\n");
-    printf("|        Contagem de clientes: %d      |\n", count);
-    printf("+--------------------------------------+\n");
-    printf("+--------------------------------------+\n");
-    printf("|              FIM DA FILA             |\n");
-    printf("+--------------------------------------+\n");
-    return;
-  
+  printf("+--------------------------------------+\n");
+  printf("|        Contagem de clientes: %d      |\n", count);
+  printf("+--------------------------------------+\n");
+  }
+  printf("+--------------------------------------+\n");
+  printf("|              FIM DA FILA             |\n");
+  printf("+--------------------------------------+\n");
+  return;
 }
 
-
 /* Teste das funções
-execute  
-gcc-9 ./menu.c ./handles/handleTransaction.c ../structs/client/client.c ../structs/transaction/transaction.c ../structs/clientQueue/clientQueue.c -o ./main
+execute
+gcc ./menu.c ./handles/handleTransaction.c ../structs/client/client.c ../structs/transaction/transaction.c ../structs/clientQueue/clientQueue.c -o./main
 ./main
+*/
 int main(){
-  ClientQueue *q = createQueue();  
-  ClientQueue *at = createQueue();  
+  ClientQueue *q = createQueue();
+  ClientQueue *at = createQueue();
 
   printMenu();
   addClientToQueue(q);
-  printRelatory(q);
-  attendClient(q, at); 
+  attendClient(q, at);
   printRelatory(q);
   printRelatory(at);
 
 
+
   return 0;
 }
-*/
 

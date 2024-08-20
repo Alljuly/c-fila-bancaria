@@ -15,7 +15,7 @@ void menuTransaction(){
 void withdraw(Transaction **transactions){
     Transaction *t = createTransaction(1, 50);
     add(transactions, t);
-}   
+}       // Saque (50s)
 void deposit(Transaction **transactions){
     Transaction *t = createTransaction(2, 70);
     add(transactions, t);
