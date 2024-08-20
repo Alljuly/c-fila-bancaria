@@ -26,7 +26,7 @@ void add(Transaction **queue, Transaction *newTransaction) {
 // remove a primeira transação
 void pop(Transaction **queue) {
   if (*queue == NULL) {
-    printf("Nenhuma transação encontrada.\n");
+    printf("Nenhuma transacao encontrada.\n");
     return;
   }
   Transaction *aux = *queue;
@@ -48,7 +48,7 @@ void getAll(Transaction *queue) {
   }
 };
 
-/* Testar da funções 
+/* Testar da funções
 Remova os comentarios e execute
 gcc-9 ./transaction.c -o ./main
 ./main

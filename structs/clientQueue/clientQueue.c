@@ -1,7 +1,7 @@
+#include "clientQueue.h"
+#include "../client/client.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "../client/client.h"
-#include "clientQueue.h"
 
 // Criação de uma nova fila de clientes
 ClientQueue *createQueue() {
@@ -37,15 +37,14 @@ Client *dequeueClient(ClientQueue *queue) {
   if (queue->front == NULL) {
     queue->rear = NULL;
   }
-  return clientToDequeue; 
-  
+  return clientToDequeue;
 }
 
 // Verificar se a fila está vazia
 int isQueueEmpty(ClientQueue *queue) {
   if (queue->front == NULL) {
     printf("+-------------------+---------------+\n");
-    printf("|          A fila está vazia        |\n");
+    printf("|          A fila esta vazia        |\n");
     printf("+-------------------+---------------+\n");
     return 1;
   }
@@ -59,19 +58,18 @@ void printQueue(ClientQueue *queue) {
     return;
   }
 
-   Client *current = queue->front;
-    printf("+-----------------------------------+\n");
-    while (current != NULL) {
-     
-      printf("|            Cliente ID: %d          |\n", current->id);
-      printf("+-----------------------------------+\n");
-      
-      current = current->next;
-    }
+  Client *current = queue->front;
+  printf("+-----------------------------------+\n");
+  while (current != NULL) {
 
+    printf("|            Cliente ID: %d          |\n", current->id);
+    printf("+-----------------------------------+\n");
+
+    current = current->next;
+  }
 }
 
-/*Teste das funções 
+/*Teste das funções
 Remova os comentarios e execute
 gcc-9 ./client.c ../transaction/transaction.c -o ./main
 ./main
@@ -81,7 +79,7 @@ int main(){
 
   Client *c = createClient(1);
   Client *c1 = createClient(3);
-  
+
   ClientQueue *queue = createQueue();
   printQueue(queue);
 

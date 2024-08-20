@@ -1,34 +1,41 @@
+#include "menu/menu.h"
+#include "structs/client/client.h"
+#include "structs/clientQueue/clientQueue.h"
+#include "structs/transaction/transaction.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "structs/clientQueue/clientQueue.h"
-#include "menu/menu.h"
 
 
-int main()
-{
-    ClientQueue *enqueue = createQueue();
-    ClientQueue *attempt = cretateQueue();
+/* Teste das funções
+execute
+gcc -mconsole  ./main.c ./menu/menu.c ./menu/handles/handleTransaction.c ./structs/client/client.c ./structs/transaction/transaction.c ./structs/clientQueue/clientQueue.c -o main
+./main
+*/
 
-    int choice;
+int main() {
+  ClientQueue *enqueue = createQueue();
+  ClientQueue *attempt = createQueue();
 
-    while (1)
-    {
-        printMenu();
-        scanf("%d",&choice);
+  int choice;
 
-        switch(choice){
-            case 1:
-                addClientToQueue(enqueue);
-            case 2:
-                attendClient(enqueue, attempt);
-            case 3:
-                printRelatory(enqueue);
-            case 4:
-                printRelatory(attempt);
-        }
+  while (1) {
+    printMenu();
+    scanf("%d", &choice);
 
+    switch (choice) {
+    case 1:
+      addClientToQueue(enqueue);
+    case 2:
+      attendClient(enqueue, attempt);
+    case 3:
+      printRelatory(enqueue);
+    case 4:
+      printRelatory(attempt);
+    default:
+      printf("... Opcao invalida");
     }
+  }
 
-    return 0;
+  return 0;
 }

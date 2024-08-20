@@ -124,20 +124,19 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients) {
 void printRelatory(ClientQueue *queue) {
 
   if (!isQueueEmpty(queue)) {
-    
-  
-  int count = 0;
 
-  while (queue->front) {
-    Client *current = queue->front;
-    viewClientInQueue(current);
-    viewClientTransactions(current);
-    count++;
-    queue->front = current->next;
-  }
-  printf("+--------------------------------------+\n");
-  printf("|        Contagem de clientes: %d      |\n", count);
-  printf("+--------------------------------------+\n");
+    int count = 0;
+
+    while (queue->front) {
+      Client *current = queue->front;
+      viewClientInQueue(current);
+      viewClientTransactions(current);
+      count++;
+      queue->front = current->next;
+    }
+    printf("+--------------------------------------+\n");
+    printf("|        Contagem de clientes: %d      |\n", count);
+    printf("+--------------------------------------+\n");
   }
   printf("+--------------------------------------+\n");
   printf("|              FIM DA FILA             |\n");
@@ -147,10 +146,12 @@ void printRelatory(ClientQueue *queue) {
 
 /* Teste das funções
 execute
-gcc ./menu.c ./handles/handleTransaction.c ../structs/client/client.c ../structs/transaction/transaction.c ../structs/clientQueue/clientQueue.c -o./main
+gcc ./menu.c ./handles/handleTransaction.c ../structs/client/client.c
+../structs/transaction/transaction.c ../structs/clientQueue/clientQueue.c
+-o./main
 ./main
-*/
-int main(){
+
+int main() {
   ClientQueue *q = createQueue();
   ClientQueue *at = createQueue();
 
@@ -160,8 +161,6 @@ int main(){
   printRelatory(q);
   printRelatory(at);
 
-
-
   return 0;
 }
-
+*/

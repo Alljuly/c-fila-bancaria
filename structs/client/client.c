@@ -4,8 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-
-//Cria um novo cliente
+// Cria um novo cliente
 Client *createClient(int id) {
   Client *newClient = (Client *)malloc(sizeof(Client));
   newClient->id = id;
@@ -16,7 +15,7 @@ Client *createClient(int id) {
   return newClient;
 }
 
-//Adiciona uma transação a fila de transações de cliente
+// Adiciona uma transação a fila de transações de cliente
 void addTransactionToClient(Client *client, Transaction *transaction) {
   if (client->transactionList == NULL) {
     client->transactionList = transaction;
@@ -29,16 +28,15 @@ void addTransactionToClient(Client *client, Transaction *transaction) {
   }
 }
 
-
-//Imprime todas as transações caso tenha
+// Imprime todas as transações caso tenha
 void printClientTransactions(Client *client) {
   if (client->transactionList == NULL) {
 
     printf("+---------------------------------------------+\n");
-    printf("| Nenhuma transação encontrada para o cliente |\n");
+    printf("| Nenhuma transacao encontrada para o cliente |\n");
     printf("|                     %d                      |\n", client->id);
     printf("+---------------------------------------------+\n");
-    
+
     return;
   }
   printf("+----------------------------------+\n");
@@ -47,7 +45,7 @@ void printClientTransactions(Client *client) {
   getAll(client->transactionList);
 }
 
-/*Teste das funções 
+/*Teste das funções
 Remova os comentarios e execute
 gcc-9 ./client.c ../transaction/transaction.c -o ./main
 ./main

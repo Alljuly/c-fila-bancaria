@@ -1,12 +1,10 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
-
-typedef struct transaction
-{
-    int cod;
-    int seconds;
-    struct transaction *prox;
+typedef struct transaction {
+  int cod;
+  int seconds;
+  struct transaction *prox;
 } Transaction;
 
 Transaction *createTransaction(int cod, int seconds);
