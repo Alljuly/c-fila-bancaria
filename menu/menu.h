@@ -1,11 +1,16 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "../structs/client/client.h"
+#include "../structs/transaction/transaction.h"
 #include "../structs/clientQueue/clientQueue.h"
+#include "./handles/handleTransaction.h"
 
 void printMenu();
 
 void addClientToQueue(ClientQueue *queue);
+
+Transaction* addTransactionsToClient();
 
 void viewClientInQueue(Client *queue);
 
@@ -18,3 +23,4 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients);
 void printRelatory(ClientQueue *queue);
 
 #endif
+
