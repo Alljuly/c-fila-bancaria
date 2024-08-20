@@ -1,11 +1,7 @@
 #include "transaction.h"
-#include "../../utils/colors.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-extern const char *colors[];
-extern int numColors;
-extern int colorIndex;
 Transaction *createTransaction(int cod, int seconds) {
   Transaction *newTransaction = (Transaction *)malloc(sizeof(Transaction));
   newTransaction->cod = cod;
@@ -42,23 +38,36 @@ void pop(Transaction **queue) {
 // imprime todas as transações caso tenha, se não informa que a lista está vazia
 void getAll(Transaction *queue) {
 
-  printf("%s+-------------------+---------------+\n",
-         colors[colorIndex++ % numColors]);
-  printf("%s| Tipo de Transacao |    Duracao    |\n",
-         colors[colorIndex++ % numColors]);
-  printf("%s+-------------------+---------------+\n",
-         colors[colorIndex++ % numColors]);
+  printf("+-------------------+---------------+\n");
+  printf("|       TIPO        +      TEMPO    |\n");
+  printf("+-------------------+---------------+\n");
   while (queue != NULL) {
     printf("| %-17d | %-13d |\n", queue->cod, queue->seconds);
-    printf("%s+-------------------+---------------+\n",
-           colors[colorIndex++ % numColors]);
+    printf("+-------------------+---------------+\n");
     queue = queue->prox;
   }
 };
 
-int main() {
-  Transaction *c = createTransaction(1, 250);
+/* Testar da funções 
+Remova os comentarios e execute
+gcc-9 ./transaction.c -o ./main
+./main
+int main(){
+  Transaction *t = createTransaction(1,50);
+  Transaction *t1 = createTransaction(2,100);
 
-  getAll(c);
+
+  getAll(t);
+
+  add(&t, t1);
+
+  getAll(t);
+
+  pop(&t);
+
+  getAll(t);
+
   return 0;
+
 }
+*/

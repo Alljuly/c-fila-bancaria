@@ -7,3 +7,6 @@
 ./clientQueue
 ./clientQueue.exe
 .vscode
+structs/clientQueue/main
+structs/client/main
+menu/main

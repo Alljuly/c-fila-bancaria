@@ -16,4 +16,4 @@ void enqueueClient(ClientQueue *queue, Client *newClient);
 Client *dequeueClient(ClientQueue *queue);
 void printQueue(ClientQueue *queue);
 
-#endif // CLIENT_QUEUE_H
+#endif 

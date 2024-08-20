@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+
+//Cria um novo cliente
 Client *createClient(int id) {
   Client *newClient = (Client *)malloc(sizeof(Client));
   newClient->id = id;
@@ -14,6 +16,7 @@ Client *createClient(int id) {
   return newClient;
 }
 
+//Adiciona uma transação a fila de transações de cliente
 void addTransactionToClient(Client *client, Transaction *transaction) {
   if (client->transactionList == NULL) {
     client->transactionList = transaction;
@@ -26,31 +29,44 @@ void addTransactionToClient(Client *client, Transaction *transaction) {
   }
 }
 
+
+//Imprime todas as transações caso tenha
 void printClientTransactions(Client *client) {
-  const char *colors[] = {
-      "\033[1;31m", // Vermelho
-      "\033[1;34m", // Azul
-      "\033[1;35m", // Magenta
-      "\033[1;36m", // Ciano
-  };
-  int numColors = sizeof(colors) / sizeof(colors[0]);
-  int colorIndex = 0;
   if (client->transactionList == NULL) {
 
-    printf("%s+----------------------------------+\n",
-           colors[colorIndex++ % numColors]);
-    printf("%s| Nenhuma transação encontrada para o cliente |\n",
-           colors[colorIndex++ % numColors]);
-    printf("%s+----------------------------------+\n",
-           colors[colorIndex++ % numColors]);
-    printf(" %d.\n", client->id);
+    printf("+---------------------------------------------+\n");
+    printf("| Nenhuma transação encontrada para o cliente |\n");
+    printf("|                     %d                      |\n", client->id);
+    printf("+---------------------------------------------+\n");
+    
     return;
   }
-  printf("%s+----------------------------------+\n",
-         colors[colorIndex++ % numColors]);
-  printf("%s|     Transacoes para o cliente %d  |\n",
-         colors[colorIndex++ % numColors], client->id);
-  printf("%s+----------------------------------+\n",
-         colors[colorIndex++ % numColors]);
-  getAll(client->transactionList); // Função para listar transações
+  printf("+----------------------------------+\n");
+  printf(" |    Transacoes para o cliente %d |\n", client->id);
+  printf("+----------------------------------+\n");
+  getAll(client->transactionList);
 }
+
+/*Teste das funções 
+Remova os comentarios e execute
+gcc-9 ./client.c ../transaction/transaction.c -o ./main
+./main
+int main(){
+  Transaction *t = createTransaction(1,50);
+  Transaction *t1 = createTransaction(2,100);
+
+  Client *c = createClient(1);
+  Client *c1 = createClient(1);
+  addTransactionToClient(c, t);
+
+  printClientTransactions(c);
+
+  printClientTransactions(c1);
+
+
+
+  return 0;
+
+}
+
+*/
