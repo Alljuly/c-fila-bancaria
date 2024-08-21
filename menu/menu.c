@@ -8,8 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void printMenu()
-{
+void printMenu() {
   printf("+-------------------------------+\n");
   printf("|            Menu               |\n");
   printf("+-------------------------------+\n");
@@ -20,15 +19,13 @@ void printMenu()
   printf("+-------------------------------+\n");
 }
 
-void addClientToQueue(ClientQueue *queue)
-{
+void addClientToQueue(ClientQueue *queue) {
   int id;
   printf("Digite o ID do cliente: ");
   scanf("%d", &id);
 
   Client *newClient = createClient(id);
-  if (newClient == NULL)
-  {
+  if (newClient == NULL) {
     printf("Erro ao criar o cliente.\n");
     return;
   }
@@ -39,16 +36,13 @@ void addClientToQueue(ClientQueue *queue)
   printf("Cliente adicionado a fila com sucesso. \n");
 }
 
-Transaction *addTransactionsToClient()
-{
+Transaction *addTransactionsToClient() {
   int aux = 1;
   Transaction *t = NULL;
-  while (aux)
-  {
+  while (aux) {
     printf("\nAdicionar transacao?\n\n1 - SIM 0 - NAO\n");
     scanf("%d", &aux);
-    if (aux)
-    {
+    if (aux) {
       int choice = 0;
       menuTransaction();
       scanf("%d", &choice);
@@ -58,25 +52,20 @@ Transaction *addTransactionsToClient()
   return t;
 }
 
-void viewClientInQueue(Client *current)
-{
+void viewClientInQueue(Client *current) {
 
-  if (current != NULL)
-  {
+  if (current != NULL) {
 
     char entryTimeStr[26];
     char exitTimeStr[26];
     strftime(entryTimeStr, sizeof(entryTimeStr), "%Y-%m-%d %H:%M:%S",
              localtime(&current->entryTime));
 
-    if (current->exitTime)
-    {
+    if (current->exitTime) {
       strftime(exitTimeStr, sizeof(exitTimeStr), "%Y-%m-%d %H:%M:%S",
                localtime(&current->exitTime));
       double diff = difftime(current->exitTime, current->entryTime);
-    }
-    else
-    {
+    } else {
       current->exitTime = time(NULL);
       strftime(exitTimeStr, sizeof(exitTimeStr), "%Y-%m-%d %H:%M:%S",
                localtime(&current->exitTime));
@@ -91,31 +80,25 @@ void viewClientInQueue(Client *current)
   }
 }
 
-void removeClientFromQueue(ClientQueue *queue)
-{
+void removeClientFromQueue(ClientQueue *queue) {
   Client *removedClient = dequeueClient(queue);
-  if (removedClient != NULL)
-  {
+  if (removedClient != NULL) {
     free(removedClient); // Libere a memória do cliente removido
   }
 }
 
-void viewClientTransactions(Client *current)
-{
+void viewClientTransactions(Client *current) {
   Transaction *currentTransactions = current->transactionList;
 
-  if (currentTransactions != NULL)
-  {
+  if (currentTransactions != NULL) {
     getAll(currentTransactions);
   }
 }
 
-void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients)
-{
+void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients) {
   Client *clientToAttend = dequeueClient(queueClients);
 
-  if (clientToAttend == NULL)
-  {
+  if (clientToAttend == NULL) {
     return;
   }
 
@@ -124,8 +107,7 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients)
   int totalProcessingTime = 0;
   Transaction *currentTransactions = clientToAttend->transactionList;
 
-  while (currentTransactions)
-  {
+  while (currentTransactions) {
     totalProcessingTime += currentTransactions->seconds;
     // adicionar sleep para os s do atendimento
     printf("..... Em atendimento a %ds......\n", totalProcessingTime);
@@ -140,16 +122,13 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients)
 }
 
 // imprime o relátorio de uma fila de clientes
-void printRelatory(ClientQueue *queue)
-{
+void printRelatory(ClientQueue *queue) {
 
-  if (!isQueueEmpty(queue))
-  {
+  if (!isQueueEmpty(queue)) {
 
     int count = 0;
 
-    while (queue->front)
-    {
+    while (queue->front) {
       Client *current = queue->front;
       viewClientInQueue(current);
       viewClientTransactions(current);
@@ -168,7 +147,9 @@ void printRelatory(ClientQueue *queue)
 
 /* Teste das funções
 execute
-gcc ../main.c ./menu.c ./handles/handleTransaction.c ../structs/client/client.c ../structs/transaction/transaction.c ../structs/clientQueue/clientQueue.c -o ./main
+gcc ../main.c ./menu.c ./menuTransaction.c ../structs/client/client.c
+../structs/transaction/transaction.c ../structs/clientQueue/clientQueue.c -o
+./main
 ./main
 
 int main() {

@@ -86,13 +86,13 @@ _Contribuições_
 ├── LICENSE
 ├── README.md
 ├── main.c
+├── main.exe
 ├── menu
-│   ├── handles
-│   │   ├── handleTransaction.c
-│   │   └── handleTransaction.h
-│   ├── main
+│   ├── main.exe
 │   ├── menu.c
-│   └── menu.h
+│   ├── menu.h
+│   ├── menuTransaction.c
+│   └── menuTransaction.h
 ├── readme.txt
 └── structs
     ├── client
@@ -167,7 +167,7 @@ _Contribuições_
 ### Como Utilizar
 - Execute
 ```shell
-gcc-9 ./menu.c ./handles/handleTransaction.c ../structs/client/client.c ../structs/transaction transaction.c ../structs/clientQueue/clientQueue.c -o ./main
+gcc ../main.c ./menu.c ./menuTransaction.c ../structs/client/client.c ../structs/transaction/transaction.c ../structs/clientQueue/clientQueue.c -o ./main
 
 ./main
 ```
