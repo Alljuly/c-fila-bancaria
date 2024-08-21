@@ -1,7 +1,7 @@
-#ifndef HADDLE_TRANSACTION_H
-#define  HADDLE_TRANSACTION_H
+#ifndef MENU_TRANSACTION_H
+#define  MENU_TRANSACTION_H
 #include <stdio.h>
-#include "../../structs/transaction/transaction.h"
+#include "../structs/transaction/transaction.h"
 
 void menuTransaction();
 
