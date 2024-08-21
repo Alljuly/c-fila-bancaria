@@ -5,7 +5,8 @@
     "transaction.h": "c",
     "clientqueue.h": "c",
     "unistd.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "stdio.h": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
