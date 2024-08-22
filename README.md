@@ -165,9 +165,14 @@ _Contribuições_
 
 
 ### Como Utilizar
+
+- Entre no diretório ``menu``:
+```shell
+cd menu
+```
 - Execute
 ```shell
-gcc ../main.c ./menu.c ./menuTransaction.c ../structs/client/client.c ../structs/transaction/transaction.c ../structs/clientQueue/clientQueue.c -o ./main
+gcc ../main.c ./client/menuClient.c ./transaction/menuTransaction.c ../structs/client/client.c ../structs/transaction/transaction.c ../structs/clientQueue/clientQueue.c -o ./main
 
 ./main
 ```
