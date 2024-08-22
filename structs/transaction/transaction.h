@@ -8,11 +8,8 @@ typedef struct transaction {
 } Transaction;
 
 Transaction *createTransaction(int cod, int seconds);
-
 void add(Transaction **queue, Transaction *newTransaction);
-
 void pop(Transaction **queue);
-
 void getAll(Transaction *queue);
 
-#endif // TRANSACTION_H
+#endif

@@ -1,4 +1,4 @@
-#include "menu/menu.h"
+#include "menu/client/menuClient.h"
 #include "structs/client/client.h"
 #include "structs/clientQueue/clientQueue.h"
 #include "structs/transaction/transaction.h"
@@ -22,6 +22,7 @@ int main()
   while (1)
   {
     printMenu();
+    printf("Opcao: ");
     scanf("%d", &choice);
 
     switch (choice)
@@ -33,9 +34,11 @@ int main()
       attendClient(enqueue, attempt);
       break;
     case 3:
+      system("clear");
       printRelatory(enqueue);
       break;
     case 4:
+      system("clear");
       printRelatory(attempt);
       break;
     default:

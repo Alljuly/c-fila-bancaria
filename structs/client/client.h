@@ -4,7 +4,8 @@
 #include <time.h>
 
 #include "../transaction/transaction.h"
-typedef struct client {
+typedef struct client
+{
   int id;
   Transaction *transactionList;
   time_t entryTime;
@@ -13,9 +14,7 @@ typedef struct client {
 } Client;
 
 Client *createClient(int id);
-
 void addTransactionToClient(Client *client, Transaction *transaction);
-
 void printClientTransactions(Client *client);
 
-#endif // CLIENT_H
+#endif

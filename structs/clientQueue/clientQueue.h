@@ -3,8 +3,8 @@
 
 #include "../client/client.h"
 typedef struct clientQueue {
-  Client *front; // Aponta para o primeiro cliente
-  Client *rear;  // Aponta para o último cliente
+  Client *front; 
+  Client *rear;  
 } ClientQueue;
 
 ClientQueue *createQueue();

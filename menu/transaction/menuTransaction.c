@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../structs/transaction/transaction.h"
+#include "../../structs/transaction/transaction.h"
 
 void menuTransaction()
 {
@@ -51,7 +51,7 @@ void addTransactionHandle(int type, Transaction **transactions)
         transfer(transactions);
         break;
     default:
-        printf("..... Opção invalida\n\n");
+        printf("\nOpcao invalida\n\n");
         break;
     }
 }

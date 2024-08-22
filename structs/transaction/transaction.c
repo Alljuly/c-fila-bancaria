@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Transaction *createTransaction(int cod, int seconds) {
+// Cria uma transação
+Transaction *createTransaction(int cod, int seconds)
+{
   Transaction *newTransaction = (Transaction *)malloc(sizeof(Transaction));
   newTransaction->cod = cod;
   newTransaction->seconds = seconds;
@@ -10,22 +12,29 @@ Transaction *createTransaction(int cod, int seconds) {
   return newTransaction;
 }
 
-// adiciona uma transação no final da lista
-void add(Transaction **queue, Transaction *newTransaction) {
-  if (*queue == NULL) {
+// Adiciona uma transação ao final da lista
+void add(Transaction **queue, Transaction *newTransaction)
+{
+  if (*queue == NULL)
+  {
     *queue = newTransaction;
-  } else {
+  }
+  else
+  {
     Transaction *aux = *queue;
-    while (aux->prox != NULL) {
+    while (aux->prox != NULL)
+    {
       aux = aux->prox;
     }
     aux->prox = newTransaction;
   }
 }
 
-// remove a primeira transação
-void pop(Transaction **queue) {
-  if (*queue == NULL) {
+// Remove a primeira transação da lista
+void pop(Transaction **queue)
+{
+  if (*queue == NULL)
+  {
     printf("Nenhuma transacao encontrada.\n");
     return;
   }
@@ -35,17 +44,20 @@ void pop(Transaction **queue) {
   return;
 };
 
-// imprime todas as transações caso tenha, se não informa que a lista está vazia
-void getAll(Transaction *queue) {
-
-  printf("+-------------------+---------------+\n");
-  printf("|       TIPO        +      TEMPO    |\n");
-  printf("+-------------------+---------------+\n");
-  while (queue != NULL) {
-    printf("| %-17d | %-13d |\n", queue->cod, queue->seconds);
-    printf("+-------------------+---------------+\n");
+// Mostra todas as transações caso tenha, se não informa que a lista está vazia
+void getAll(Transaction *queue)
+{
+  printf("|        TRANSACOES DO CLIENTE         |\n");
+  printf("+--------------------------------------+\n");
+  printf("|       TIPO        |       TEMPO(s)   |\n");
+  printf("+--------------------------------------+\n");
+  while (queue != NULL)
+  {
+    printf("| %-17d | %-17d|\n", queue->cod, queue->seconds);
+    printf("+--------------------------------------+\n");
     queue = queue->prox;
   }
+  printf("\n");
 };
 
 /* Testar da funções

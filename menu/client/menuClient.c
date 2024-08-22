@@ -1,31 +1,35 @@
-#include "menu.h"
+#include "menuClient.h"
 
-#include "../structs/client/client.h"
-#include "../structs/clientQueue/clientQueue.h"
-#include "../structs/transaction/transaction.h"
-#include "./menuTransaction.h"
+#include "../../structs/client/client.h"
+#include "../../structs/clientQueue/clientQueue.h"
+#include "../../structs/transaction/transaction.h"
+#include "../transaction/menuTransaction.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-void printMenu() {
-  printf("+-------------------------------+\n");
-  printf("|            Menu               |\n");
-  printf("+-------------------------------+\n");
-  printf("| 1. Adicionar cliente          |\n");
-  printf("| 2. Atender cliente            |\n");
-  printf("| 3. Exibir relatorio da fila   |\n");
-  printf("| 4. Exibir relatorio geral     |\n");
-  printf("+-------------------------------+\n");
+void printMenu()
+{
+  printf("\n+--------------------------------------+\n");
+  printf("|            Menu                      |\n");
+  printf("+--------------------------------------+\n");
+  printf("| 1. Adicionar cliente                 |\n");
+  printf("| 2. Atender clientes                  |\n");
+  printf("| 3. Exibir relatorio da fila atual    |\n");
+  printf("| 4. Exibir relatorio geral            |\n");
+  printf("+--------------------------------------+\n\n");
 }
 
-void addClientToQueue(ClientQueue *queue) {
+void addClientToQueue(ClientQueue *queue)
+{
   int id;
-  printf("Digite o ID do cliente: ");
+  system("clear");
+  printf("ID do cliente: ");
   scanf("%d", &id);
 
   Client *newClient = createClient(id);
-  if (newClient == NULL) {
+  if (newClient == NULL)
+  {
     printf("Erro ao criar o cliente.\n");
     return;
   }
@@ -33,16 +37,20 @@ void addClientToQueue(ClientQueue *queue) {
   newClient->transactionList = addTransactionsToClient();
 
   enqueueClient(queue, newClient);
-  printf("Cliente adicionado a fila com sucesso. \n");
+  printf("-> Cliente adicionado a fila com sucesso. \n");
 }
 
-Transaction *addTransactionsToClient() {
+Transaction *addTransactionsToClient()
+{
   int aux = 1;
   Transaction *t = NULL;
-  while (aux) {
-    printf("\nAdicionar transacao?\n\n1 - SIM 0 - NAO\n");
+  while (aux)
+  {
+    printf("\nAdicionar transacao?\n(1 - Sim | 0 - Nao): ");
     scanf("%d", &aux);
-    if (aux) {
+    system("clear");
+    if (aux)
+    {
       int choice = 0;
       menuTransaction();
       scanf("%d", &choice);
@@ -52,53 +60,58 @@ Transaction *addTransactionsToClient() {
   return t;
 }
 
-void viewClientInQueue(Client *current) {
+void viewClientInQueue(Client *current)
+{
 
-  if (current != NULL) {
+  if (current != NULL)
+  {
 
     char entryTimeStr[26];
     char exitTimeStr[26];
     strftime(entryTimeStr, sizeof(entryTimeStr), "%Y-%m-%d %H:%M:%S",
              localtime(&current->entryTime));
 
-    if (current->exitTime) {
-      strftime(exitTimeStr, sizeof(exitTimeStr), "%Y-%m-%d %H:%M:%S",
-               localtime(&current->exitTime));
-      double diff = difftime(current->exitTime, current->entryTime);
-    } else {
+    if (!current->exitTime)
+    {
       current->exitTime = time(NULL);
-      strftime(exitTimeStr, sizeof(exitTimeStr), "%Y-%m-%d %H:%M:%S",
-               localtime(&current->exitTime));
     }
+    strftime(exitTimeStr, sizeof(exitTimeStr), "%Y-%m-%d %H:%M:%S", localtime(&current->exitTime));
     double diff = difftime(current->exitTime, current->entryTime);
 
     printf("+--------------------------------------+\n");
-    printf("| Cliente ID: %d                       |\n", current->id);
-    printf("| Entrada: %s       |\n", entryTimeStr);
-    printf("| Tempo na Fila: %.lfs                 |\n", diff);
+    printf("| Cliente ID: %d                        |\n", current->id);
+    printf("| Entrada: %s         |\n", entryTimeStr);
+    printf("| Tempo na Fila: %.lfs                    |\n", diff);
     printf("+--------------------------------------+\n");
   }
 }
 
-void removeClientFromQueue(ClientQueue *queue) {
+void removeClientFromQueue(ClientQueue *queue)
+{
   Client *removedClient = dequeueClient(queue);
-  if (removedClient != NULL) {
+  if (removedClient != NULL)
+  {
     free(removedClient); // Libere a memória do cliente removido
   }
 }
 
-void viewClientTransactions(Client *current) {
+void viewClientTransactions(Client *current)
+{
   Transaction *currentTransactions = current->transactionList;
+  printf("%d", currentTransactions->cod);
 
-  if (currentTransactions != NULL) {
+  if (currentTransactions != NULL)
+  {
     getAll(currentTransactions);
   }
 }
 
-void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients) {
+void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients)
+{
   Client *clientToAttend = dequeueClient(queueClients);
 
-  if (clientToAttend == NULL) {
+  if (clientToAttend == NULL)
+  {
     return;
   }
 
@@ -107,7 +120,8 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients) {
   int totalProcessingTime = 0;
   Transaction *currentTransactions = clientToAttend->transactionList;
 
-  while (currentTransactions) {
+  while (currentTransactions)
+  {
     totalProcessingTime += currentTransactions->seconds;
     // adicionar sleep para os s do atendimento
     printf("..... Em atendimento a %ds......\n", totalProcessingTime);
@@ -118,30 +132,37 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients) {
 
   enqueueClient(attemptedClients, clientToAttend);
   printf("Cliente %d atendido.\n", clientToAttend->id);
+  if (queueClients->front == NULL)
+  {
+    return;
+  }
   attendClient(queueClients, attemptedClients);
 }
 
 // imprime o relátorio de uma fila de clientes
-void printRelatory(ClientQueue *queue) {
+void printRelatory(ClientQueue *queue)
+{
 
-  if (!isQueueEmpty(queue)) {
+  if (!isQueueEmpty(queue))
+  {
 
     int count = 0;
 
-    while (queue->front) {
+    while (queue->front)
+    {
       Client *current = queue->front;
       viewClientInQueue(current);
       viewClientTransactions(current);
       count++;
       queue->front = current->next;
     }
+    printf("\n\n+--------------------------------------+\n");
+    printf("|              FIM DA FILA             |\n");
     printf("+--------------------------------------+\n");
     printf("|        Contagem de clientes: %d       |\n", count);
     printf("+--------------------------------------+\n");
+    return;
   }
-  printf("+--------------------------------------+\n");
-  printf("|              FIM DA FILA             |\n");
-  printf("+--------------------------------------+\n");
   return;
 }
 
