@@ -88,11 +88,12 @@ _Contribuições_
 ├── main.c
 ├── main.exe
 ├── menu
-│   ├── main.exe
-│   ├── menu.c
-│   ├── menu.h
-│   ├── menuTransaction.c
-│   └── menuTransaction.h
+  ├── menuClient
+  │   ├── menuClient.c
+  │   └── menuClient.h
+  ├── menuTransaction
+  │   ├── menuTransaction.c
+  │   └── menuTransaction.h
 ├── readme.txt
 └── structs
     ├── client

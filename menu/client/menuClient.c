@@ -20,6 +20,23 @@ void printMenu()
   printf("+--------------------------------------+\n\n");
 }
 
+const char *getTransactionName(int cod)
+{
+  switch (cod)
+  {
+  case 1:
+    return "Saque";
+  case 2:
+    return "Depósito";
+  case 3:
+    return "Pagamento";
+  case 4:
+    return "Transferência";
+  default:
+    return "Desconhecido";
+  }
+}
+
 void addClientToQueue(ClientQueue *queue)
 {
   int id;
@@ -42,30 +59,34 @@ void addClientToQueue(ClientQueue *queue)
 
 Transaction *addTransactionsToClient()
 {
-  int aux = 1;
-  Transaction *t = NULL;
-  while (aux)
+  char aux = 's';
+  Transaction *transaction = NULL;
+  while (aux == 's')
   {
-    printf("\nAdicionar transacao?\n(1 - Sim | 0 - Nao): ");
-    scanf("%d", &aux);
+    printf("\nAdicionar transacao?\n(s/n): ");
+    scanf(" %c", &aux);
     system("clear");
-    if (aux)
+
+    if (aux == 's')
     {
       int choice = 0;
       menuTransaction();
       scanf("%d", &choice);
-      addTransactionHandle(choice, &t);
+      addTransactionHandle(choice, &transaction);
+    }
+    else if (aux != 'n')
+    {
+      printf("\nOpcao invalida\n\n");
+      aux = 's';
     }
   }
-  return t;
+  return transaction;
 }
 
 void viewClientInQueue(Client *current)
 {
-
   if (current != NULL)
   {
-
     char entryTimeStr[26];
     char exitTimeStr[26];
     strftime(entryTimeStr, sizeof(entryTimeStr), "%Y-%m-%d %H:%M:%S",
@@ -79,7 +100,7 @@ void viewClientInQueue(Client *current)
     double diff = difftime(current->exitTime, current->entryTime);
 
     printf("+--------------------------------------+\n");
-    printf("| Cliente ID: %d                        |\n", current->id);
+    printf("| Cliente ID: %d%-22s |\n", current->id, current->priority ? " (prioridade)" : "");
     printf("| Entrada: %s         |\n", entryTimeStr);
     printf("| Tempo na Fila: %.lfs                    |\n", diff);
     printf("+--------------------------------------+\n");
@@ -98,7 +119,6 @@ void removeClientFromQueue(ClientQueue *queue)
 void viewClientTransactions(Client *current)
 {
   Transaction *currentTransactions = current->transactionList;
-  printf("%d", currentTransactions->cod);
 
   if (currentTransactions != NULL)
   {
@@ -115,7 +135,7 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients)
     return;
   }
 
-  printf("Atendendo cliente %d ...\n", clientToAttend->id);
+  printf("Atendendo cliente %d%s ...\n", clientToAttend->id, clientToAttend->priority ? " (prioridade)" : "");
 
   int totalProcessingTime = 0;
   Transaction *currentTransactions = clientToAttend->transactionList;
@@ -123,8 +143,8 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients)
   while (currentTransactions)
   {
     totalProcessingTime += currentTransactions->seconds;
-    // adicionar sleep para os s do atendimento
-    printf("..... Em atendimento a %ds......\n", totalProcessingTime);
+    // Adicionar sleep para simular o tempo de atendimento
+    printf("..... Em atendimento a %ds (%s)......\n", totalProcessingTime, getTransactionName(currentTransactions->cod));
     currentTransactions = currentTransactions->prox;
   }
 
@@ -139,23 +159,22 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients)
   attendClient(queueClients, attemptedClients);
 }
 
-// imprime o relátorio de uma fila de clientes
+// Mostra o relátorio de uma fila de clientes
 void printRelatory(ClientQueue *queue)
 {
-
   if (!isQueueEmpty(queue))
   {
-
     int count = 0;
+    Client *current = queue->front;
 
-    while (queue->front)
+    while (current != NULL)
     {
-      Client *current = queue->front;
       viewClientInQueue(current);
       viewClientTransactions(current);
       count++;
-      queue->front = current->next;
+      current = current->next;
     }
+
     printf("\n\n+--------------------------------------+\n");
     printf("|              FIM DA FILA             |\n");
     printf("+--------------------------------------+\n");
@@ -163,7 +182,6 @@ void printRelatory(ClientQueue *queue)
     printf("+--------------------------------------+\n");
     return;
   }
-  return;
 }
 
 /* Teste das funções

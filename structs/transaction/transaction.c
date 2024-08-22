@@ -53,12 +53,30 @@ void getAll(Transaction *queue)
   printf("+--------------------------------------+\n");
   while (queue != NULL)
   {
-    printf("| %-17d | %-17d|\n", queue->cod, queue->seconds);
+    const char *operationType;
+    switch (queue->cod)
+    {
+    case 1:
+      operationType = "Saque";
+      break;
+    case 2:
+      operationType = "Depósito";
+      break;
+    case 3:
+      operationType = "Pagamento";
+      break;
+    case 4:
+      operationType = "Transferência";
+      break;
+    default:
+      operationType = "Desconhecido";
+      break;
+    }
+    printf("| %-17s | %-17d|\n", operationType, queue->seconds);
     printf("+--------------------------------------+\n");
     queue = queue->prox;
   }
-  printf("\n");
-};
+}
 
 /* Testar da funções
 Remova os comentarios e execute

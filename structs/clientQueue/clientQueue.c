@@ -18,17 +18,39 @@ ClientQueue *createQueue()
 // Adicionar cliente à fila
 void enqueueClient(ClientQueue *queue, Client *newClient)
 {
-  if (queue->rear == NULL)
+  if (queue->front == NULL)
   {
     queue->front = newClient;
     queue->rear = newClient;
+  }
+  else if (newClient->priority == 1)
+  {
+    if (queue->front->priority == 0)
+    {
+      newClient->next = queue->front;
+      queue->front = newClient;
+    }
+    else
+    {
+      Client *current = queue->front;
+      while (current->next != NULL && current->next->priority == 1)
+      {
+        current = current->next;
+      }
+      newClient->next = current->next;
+      current->next = newClient;
+      if (newClient->next == NULL)
+      {
+        queue->rear = newClient;
+      }
+    }
   }
   else
   {
     queue->rear->next = newClient;
     queue->rear = newClient;
+    newClient->next = NULL;
   }
-  newClient->next = NULL;
 }
 
 // Remover cliente da fila

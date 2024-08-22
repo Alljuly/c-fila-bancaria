@@ -5,32 +5,46 @@
 #include <time.h>
 
 // Cria um novo cliente
-Client *createClient(int id) {
+Client *createClient(int id)
+{
   Client *newClient = (Client *)malloc(sizeof(Client));
   newClient->id = id;
   newClient->transactionList = NULL;
   newClient->entryTime = time(NULL);
   newClient->exitTime = 0;
   newClient->next = NULL;
+
+  int priority;
+  printf("O cliente é prioritário? (1 - Sim | 0 - Não): ");
+  scanf("%d", &priority);
+  newClient->priority = priority;
+
   return newClient;
 }
 
 // Adiciona uma transação a fila de transações de cliente
-void addTransactionToClient(Client *client, Transaction *transaction) {
-  if (client->transactionList == NULL) {
+void addTransactionToClient(Client *client, Transaction *transaction)
+{
+  if (client->transactionList == NULL)
+  {
     client->transactionList = transaction;
-  } else {
+  }
+  else
+  {
     Transaction *current = client->transactionList;
-    while (current->prox != NULL) {
+    while (current->prox != NULL)
+    {
       current = current->prox;
     }
     current->prox = transaction;
   }
 }
 
-// Imprime todas as transações caso tenha
-void printClientTransactions(Client *client) {
-  if (client->transactionList == NULL) {
+// Mostra todas as transações caso tenha
+void printClientTransactions(Client *client)
+{
+  if (client->transactionList == NULL)
+  {
 
     printf("+---------------------------------------------+\n");
     printf("| Nenhuma transacao encontrada para o cliente |\n");

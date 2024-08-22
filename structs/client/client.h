@@ -7,6 +7,7 @@
 typedef struct client
 {
   int id;
+  int priority;
   Transaction *transactionList;
   time_t entryTime;
   time_t exitTime;
