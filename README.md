@@ -203,7 +203,11 @@ _Contribuições_
     
         // Verifica filas de atendimento para encerrar expediente.
     int endAttendence(ClientQueue *enqueue, ClientQueue *attempt);
-    ```    
+    ```
+    
+#### Visualização do `menuClient.c` que o usuário acessa em `main`
+![menuClient](https://github.com/user-attachments/assets/62c1b014-6c5e-425d-abb2-ab76c00a219c)
+
   - menu/transaction:
     ```C
         // imprime o menu das transações, auxiliar de cliente
@@ -224,6 +228,9 @@ _Contribuições_
          // switch para tipo de transação
     void addTransactionHandle(int type, Transaction **transactions);
     ```
+#### Visualização do `menuTransaction.c` que o usuário acessa em `main`
+![menuTransaction](https://github.com/user-attachments/assets/b5a3e3f8-a484-47ca-bd4d-a846fa956f9b)
+    
 ### Como Utilizar
 
 Clone o repo
