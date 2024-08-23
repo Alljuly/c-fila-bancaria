@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 void printMenu()
 {
@@ -16,7 +17,8 @@ void printMenu()
   printf("| 1. Adicionar cliente                 |\n");
   printf("| 2. Atender clientes                  |\n");
   printf("| 3. Exibir relatorio da fila atual    |\n");
-  printf("| 4. Exibir relatorio geral            |\n");
+  printf("| 4. Exibir atendimentos               |\n");
+  printf("| 5. Encerrar atendimentos             |\n");
   printf("+--------------------------------------+\n\n");
 }
 
@@ -55,6 +57,12 @@ void addClientToQueue(ClientQueue *queue)
 
   enqueueClient(queue, newClient);
   printf("-> Cliente adicionado a fila com sucesso. \n");
+}
+
+void waitForTransaction(int seconds) {
+    if (seconds > 0) {
+        sleep(seconds); 
+    }
 }
 
 Transaction *addTransactionsToClient()
@@ -143,7 +151,7 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients)
   while (currentTransactions)
   {
     totalProcessingTime += currentTransactions->seconds;
-    // Adicionar sleep para simular o tempo de atendimento
+    waitForTransaction(currentTransactions->seconds);
     printf("..... Em atendimento a %ds (%s)......\n", totalProcessingTime, getTransactionName(currentTransactions->cod));
     currentTransactions = currentTransactions->prox;
   }
@@ -182,6 +190,19 @@ void printRelatory(ClientQueue *queue)
     printf("+--------------------------------------+\n");
     return;
   }
+}
+
+int endAttendence(ClientQueue *enqueue, ClientQueue *attempt){
+  printf("-> ainda faltam clientes a serem atendidos, encerrar?\n(s/n): ");
+  char aux;
+  scanf("%s", &aux);
+    if(aux){
+    printRelatory(enqueue);
+    printRelatory(attempt);
+    return 1;
+    } 
+  
+  return 0;
 }
 
 /* Teste das funções

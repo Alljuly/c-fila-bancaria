@@ -43,6 +43,12 @@ int main()
       system("clear");
       printRelatory(attempt);
       break;
+    case 5:
+      system("clear");
+      if(endAttendence(enqueue, attempt)){
+        return 0;
+      }
+      break;
     default:
       printf("\nOpcao invalida\n\n");
       break;

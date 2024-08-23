@@ -10,16 +10,21 @@ void printMenu();
 
 void addClientToQueue(ClientQueue *queue);
 
+//simula tempo de atendimento
+void waitForTransaction(int seconds);
+
 Transaction *addTransactionsToClient();
 
 void viewClientInQueue(Client *queue);
 
-void removeClientFromQueue(ClientQueue *queue);
-
 void viewClientTransactions(Client *queue);
+
+void removeClientFromQueue(ClientQueue *queue);
 
 void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients);
 
 void printRelatory(ClientQueue *queue);
+
+int endAttendence(ClientQueue *enqueue, ClientQueue *attempt);
 
 #endif

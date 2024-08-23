@@ -1,3 +1,5 @@
+Ideias para o projeto.
+
 Olá meu querido.
 
 Estou um pouco desocupada então vou anotar algumas ideias aqui.

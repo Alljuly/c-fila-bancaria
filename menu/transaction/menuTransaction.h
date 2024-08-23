@@ -4,8 +4,6 @@
 #include "../../structs/transaction/transaction.h"
 
 void menuTransaction();
-
-
 void withdraw(Transaction **transactions);   // Saque (50s)
 void deposit(Transaction **transactions);    // Depósito (70s)
 void payment(Transaction **transactions);    // Pagamento (100s)
