@@ -74,9 +74,6 @@ _Contribuições_
 
 </div>
 
-
-
-
 ## Processo para elaboração do projeto
 
 ### Estrutura de Diretórios do Projeto
@@ -86,14 +83,13 @@ _Contribuições_
 ├── LICENSE
 ├── README.md
 ├── main.c
-├── main.exe
 ├── menu
-  ├── menuClient
-  │   ├── menuClient.c
-  │   └── menuClient.h
-  ├── menuTransaction
-  │   ├── menuTransaction.c
-  │   └── menuTransaction.h
+│   ├── client
+│   │   ├── menuClient.c
+│   │   └── menuClient.h
+│   └── transaction
+│       ├── menuTransaction.c
+│       └── menuTransaction.h
 ├── readme.txt
 └── structs
     ├── client
@@ -105,32 +101,41 @@ _Contribuições_
     └── transaction
         ├── transaction.c
         └── transaction.h
-
 ```
+
+### Bibliotecas Utilizadas
+- #include <stdio.h>
+- #include <stdlib.h>
+- #include <unistd.h>
+- #include <time.h>
 
 ### Definições das Structs
 
-- Para Transações (Transaction):
+- Para Transações `Transaction`:
   - Para a fila de transações foi implementada uma lista encadeada, permitindo um gerenciamento dinâmico.
     ```C
     struct transaction {
-    int cod;
-    int s;
-    Transaction *prox;
+    int cod; // Codigo do tipo da transação
+    int s; // Tempo estimado para efetuar a transação
+    Transaction *prox; // ponteiro para a proxima transação da lista
     };
     typedef struct transaction Transaction;
     ```
   - Metódos:
-    - Transaction *createTransaction(int cod, int seconds);
-    - void add(Transaction **queue, Transaction *newTransaction);
-    - void pop(Transaction **queue);
-    - void getAll(Transaction *queue);
-- Para Cliente (Client):
+    ```C
+    Transaction *createTransaction(int cod, int seconds);
+    void add(Transaction **queue, Transaction *newTransaction);
+    void pop(Transaction **queue);
+    void getAll(Transaction *queue);
+    ```
+      
+- Para Cliente `Client`:
   - Foi definido que a estrutura de cliente seria utilizado uma fila, dessa forma "Client".
     ```C
     typedef struct client
     {
     int id; // Identificação do cliente
+    int priority; // Indentificação de prioridade
     Transaction *transactionList; // Lista de transações que o cliente irá realizar
     time_t entryTime;  // Momento que o cliente foi alocado na fila
     time_t exitTime;   // Momento que o cliente teve seu atendimento finalizado
@@ -139,11 +144,14 @@ _Contribuições_
     ```
   - Seguindo a lógica de uma fila real de um banco, o conceito de uma estrutura FIFO se encaixaria bem.
   - Metódos:
-    - Client *createClient(int id);
-    - void addTransactionToClient(Client *client, Transaction *transaction);
-    - void printClientTransactions(Client *client);
+    ```C
+    Client *createClient(int id);
+    void addTransactionToClient(Client *client, Transaction *transaction);
+    void printClientTransactions(Client *client);
+    ```
   - Por se Tratar de uma fila, a clientQueue foi definida para genrencia-la.
-- Para a Fila de clientes (ClientQueue):
+    
+- Para a Fila de clientes `ClientQueue`:
   - Responsável por gerenciar os clientes, sua estrutura consiste em:
     ```C
     typedef struct clientQueue
@@ -151,32 +159,82 @@ _Contribuições_
     Client *front; // Aponta para o primeiro cliente da fila
     Client  *rear;  // Aponta para o último cliente da fila
     } ClientQueue;
-     ```
+    ```
   - Metódos:
-    - ClientQueue *createQueue();
-    - int isQueueEmpty(ClientQueue *queue);
-    - void enqueueClient(ClientQueue *queue, Client *newClient);
-    - Client *dequeueClient(ClientQueue *queue);
-    - void printQueue(ClientQueue *queue);
+    ```C
+    ClientQueue *createQueue();
+    int isQueueEmpty(ClientQueue *queue);
+    void enqueueClient(ClientQueue *queue, Client *newClient);
+    void enqueueAttemptClient(ClientQueue *queue, Client *newClient);
+    Client *dequeueClient(ClientQueue *queue);
+    void printQueue(ClientQueue *queue);
+    ```
     
 ### Definindo Menu
+#### Os diretórios `menu/client` e `menu/transaction` possuem as funções responsáveis por gerenciar todas as funcionalidades do banco.
+  - menu/client.h:
+    ```C
+        // imprime o menu para atender o cliente
+    void printMenu();
 
+        // responsável por adicionar cliente a fila para ser atendido de acordo sua prioridade
+    void addClientToQueue(ClientQueue *queue);
+    
+        //simula tempo de atendimento
+    void waitForTransaction(int seconds);
+    
+        // adiciona as transações para o cliente
+    Transaction *addTransactionsToClient();
 
-### Definindo Handle
+        // imprime relatório de clientes na fila
+    void viewClientInQueue(Client *queue);
 
+        // imprime relatório das transacoes do cliente
+    void viewClientTransactions(Client *queue);
 
+        // remove cliente da fila 
+    void removeClientFromQueue(ClientQueue *queue);
+    
+        // Começa os atendimentos dos clientes na fila
+    void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients);
+
+        // imprime o relátorio geral da fila.
+    void printRelatory(ClientQueue *queue);
+    
+        // Verifica filas de atendimento para encerrar expediente.
+    int endAttendence(ClientQueue *enqueue, ClientQueue *attempt);
+    ```    
+  - menu/transaction:
+    ```C
+        // imprime o menu das transações, auxiliar de cliente
+    void menuTransaction();
+
+        // adiciona um saque a lista de transações
+    void withdraw(Transaction **transactions);   // Saque (50s)
+    
+        // adiciona um depósito a lista de transações
+    void deposit(Transaction **transactions);    // Depósito (70s)
+    
+        // adiciona um pagamento a lista de transações
+    void payment(Transaction **transactions);    // Pagamento (100s)
+    
+        // adiciona uma transferência a lista de transações
+    void transfer(Transaction **transactions);   // Transferência (60s)
+    
+         // switch para tipo de transação
+    void addTransactionHandle(int type, Transaction **transactions);
+    ```
 ### Como Utilizar
 
-- Entre no diretório ``menu``:
-```shell
-cd menu
+Clone o repo
+```Shell
+    ~ git clone https://github.com/Alljuly/c-fila-bancaria/
 ```
-- Execute
-```shell
-gcc ../main.c ./client/menuClient.c ./transaction/menuTransaction.c ../structs/client/client.c ../structs/transaction/transaction.c ../structs/clientQueue/clientQueue.c -o ./main
+Dentro da raiz do projeto, execute:
+```Shell
+    ~ gcc ./main.c ./menu/client/menuClient.c ./menu/transaction/menuTransaction.c ./structs/client/client.c ./structs/transaction/transaction.c ./structs/clientQueue/clientQueue.c -o ./main
 
-./main
+    ~ ./main
 ```
-- Main
 
 
