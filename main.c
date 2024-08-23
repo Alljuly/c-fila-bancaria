@@ -9,6 +9,8 @@
 /* Teste das funções
 execute
 gcc -mconsole  ./main.c ./menu/menu.c ./menu/handles/handleTransaction.c ./structs/client/client.c ./structs/transaction/transaction.c ./structs/clientQueue/clientQueue.c -o main
+gcc-9  ./main.c ./menu/menuTransaction/MenuTransaction.c ./menu/menuClient/menuClient.c ./structs/client/client.c ./structs/transaction/transaction.c ./structs/clientQueue/clientQueue.c -o ./main
+
 ./main
 */
 

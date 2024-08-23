@@ -10,6 +10,7 @@ typedef struct clientQueue {
 ClientQueue *createQueue();
 int isQueueEmpty(ClientQueue *queue);
 void enqueueClient(ClientQueue *queue, Client *newClient);
+void enqueueAttemptClient(ClientQueue *queue, Client *newClient);
 Client *dequeueClient(ClientQueue *queue);
 void printQueue(ClientQueue *queue);
 

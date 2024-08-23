@@ -150,7 +150,7 @@ void attendClient(ClientQueue *queueClients, ClientQueue *attemptedClients)
 
   clientToAttend->exitTime = time(NULL);
 
-  enqueueClient(attemptedClients, clientToAttend);
+  enqueueAttemptClient(attemptedClients, clientToAttend);
   printf("Cliente %d atendido.\n", clientToAttend->id);
   if (queueClients->front == NULL)
   {
